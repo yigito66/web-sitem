@@ -10,10 +10,16 @@ body {
     font-family: Arial;
     background-color: #1e1e2f;
     color: white;
+    transition: 0.3s;
+}
+
+.light-mode {
+    background-color: white;
+    color: black;
 }
 
 h1 {
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 input {
@@ -39,6 +45,11 @@ button {
 button:hover {
     background-color: #45a049;
 }
+
+#gecmis {
+    margin-top: 20px;
+    font-size: 18px;
+}
 </style>
 
 <script>
@@ -47,20 +58,20 @@ function hesapla(islem) {
     var sayi2 = parseFloat(document.getElementById("sayi2").value);
     var sonuc;
 
-    if (islem == "+") {
-        sonuc = sayi1 + sayi2;
-    }
-    if (islem == "-") {
-        sonuc = sayi1 - sayi2;
-    }
-    if (islem == "*") {
-        sonuc = sayi1 * sayi2;
-    }
-    if (islem == "/") {
-        sonuc = sayi1 / sayi2;
-    }
+    if (islem == "+") sonuc = sayi1 + sayi2;
+    if (islem == "-") sonuc = sayi1 - sayi2;
+    if (islem == "*") sonuc = sayi1 * sayi2;
+    if (islem == "/") sonuc = sayi1 / sayi2;
 
     document.getElementById("sonuc").innerHTML = "Sonuç: " + sonuc;
+
+    // Geçmişe ekleme
+    var gecmis = document.getElementById("gecmis");
+    gecmis.innerHTML += "<div>" + sayi1 + " " + islem + " " + sayi2 + " = " + sonuc + "</div>";
+}
+
+function temaDegistir() {
+    document.body.classList.toggle("light-mode");
 }
 </script>
 
@@ -69,6 +80,10 @@ function hesapla(islem) {
 <body>
 
 <h1>Hesap Makinesi</h1>
+
+<button onclick="temaDegistir()">🌙 / ☀ Tema Değiştir</button>
+
+<br><br>
 
 <input type="number" id="sayi1" placeholder="1. Sayı">
 <br>
@@ -83,8 +98,12 @@ function hesapla(islem) {
 
 <h2 id="sonuc">Sonuç:</h2>
 
+<h3>İşlem Geçmişi:</h3>
+<div id="gecmis"></div>
+
 </body>
 </html>
+
 
 
 
