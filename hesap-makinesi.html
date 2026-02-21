@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hesap Makinesi</title>
+    <style>
+        body {
+            background-color: #1e1e2f;
+            color: white;
+            text-align: center;
+            font-family: Arial;
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px;
+            width: 100px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .sonuc {
+            margin-top: 20px;
+            font-size: 20px;
+            color: yellow;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🧮 Hesap Makinesi</h1>
+
+    <input type="number" id="sayi1" placeholder="1. Sayı">
+    <input type="number" id="sayi2" placeholder="2. Sayı">
+    <br>
+
+    <button onclick="topla()">Topla</button>
+    <button onclick="cikar()">Çıkar</button>
+
+    <div class="sonuc" id="sonuc"></div>
+
+    <br><br>
+    <a href="index.html">Ana Sayfaya Dön</a>
+
+    <script>
+        function topla() {
+            var s1 = Number(document.getElementById("sayi1").value);
+            var s2 = Number(document.getElementById("sayi2").value);
+            document.getElementById("sonuc").innerHTML = "Sonuç: " + (s1 + s2);
+        }
+
+        function cikar() {
+            var s1 = Number(document.getElementById("sayi1").value);
+            var s2 = Number(document.getElementById("sayi2").value);
+            document.getElementById("sonuc").innerHTML = "Sonuç: " + (s1 - s2);
+        }
+    </script>
+
+</body>
+</html>
