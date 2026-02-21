@@ -54,18 +54,37 @@
     <a href="index.html">Ana Sayfaya Dön</a>
 
     <script>
-        function topla() {
-            var s1 = Number(document.getElementById("sayi1").value);
-            var s2 = Number(document.getElementById("sayi2").value);
-            document.getElementById("sonuc").innerHTML = "Sonuç: " + (s1 + s2);
-        }
+       function topla() {
+    var s1 = Number(document.getElementById("sayi1").value);
+    var s2 = Number(document.getElementById("sayi2").value);
+    document.getElementById("sonuc").innerHTML = "Sonuç: " + (s1 + s2);
+}
 
-        function cikar() {
-            var s1 = Number(document.getElementById("sayi1").value);
-            var s2 = Number(document.getElementById("sayi2").value);
-            document.getElementById("sonuc").innerHTML = "Sonuç: " + (s1 - s2);
+function cikar() {
+    var s1 = Number(document.getElementById("sayi1").value);
+    var s2 = Number(document.getElementById("sayi2").value);
+    document.getElementById("sonuc").innerHTML = "Sonuç: " + (s1 - s2);
+}
+
+function carp() {
+    var s1 = Number(document.getElementById("sayi1").value);
+    var s2 = Number(document.getElementById("sayi2").value);
+    document.getElementById("sonuc").innerHTML = "Sonuç: " + (s1 * s2);
+}
+
+function bol() {
+    var s1 = Number(document.getElementById("sayi1").value);
+    var s2 = Number(document.getElementById("sayi2").value);
+
+    if (s2 === 0) {
+        document.getElementById("sonuc").innerHTML = "Sıfıra bölünemez!";
+    } else {
+        document.getElementById("sonuc").innerHTML = "Sonuç: " + (s1 / s2);
+    }
+
         }
     </script>
 
 </body>
 </html>
+
