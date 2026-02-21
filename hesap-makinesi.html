@@ -5,128 +5,128 @@
 <title>Hesap Makinesi</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial;
-    background: linear-gradient(135deg,#1e1e2f,#3a3a6a);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    color: white;
-    transition: 0.3s;
+body{
+    margin:0;
+    font-family:Arial;
+    background:#1e1e2f;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    color:white;
 }
 
-.light-mode {
-    background: #f2f2f2;
-    color: black;
+.light{
+    background:#f2f2f2;
+    color:black;
 }
 
-.container {
-    width: 95%;
-    max-width: 400px;
-    background: #2c2c3e;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.4);
-    text-align: center;
+.container{
+    width:95%;
+    max-width:380px;
+    background:#2c2c3e;
+    padding:15px;
+    border-radius:15px;
+    text-align:center;
 }
 
-.light-mode .container {
-    background: white;
+.light .container{
+    background:white;
 }
 
-.top-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+.top{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
 }
 
-.top-buttons button {
-    width: 48%;
-    height: 40px;
-    font-size: 13px;
+.top button{
+    width:48%;
+    height:35px;
+    font-size:12px;
 }
 
-#ekran {
-    width: 100%;
-    height: 60px;
-    font-size: 28px;
-    margin-bottom: 15px;
-    text-align: right;
-    padding-right: 10px;
+#ekran{
+    width:100%;
+    height:55px;
+    font-size:24px;
+    margin-bottom:10px;
+    text-align:right;
+    padding-right:8px;
 }
 
-.buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
 }
 
-button {
-    height: 60px;
-    font-size: 20px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.2s;
+button{
+    height:55px;
+    font-size:18px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
 }
 
-button:hover {
-    transform: scale(1.05);
-}
+.num{background:#444;color:white;}
+.op{background:#4CAF50;color:white;}
+.equal{background:#2196F3;color:white;}
+.clear{background:#777;color:white;}
 
-.num { background:#444; color:white; }
-.plus { background:#4CAF50; color:white; }
-.minus { background:#f44336; color:white; }
-.mul { background:#9C27B0; color:white; }
-.div { background:#FF9800; color:white; }
-.equal { background:#2196F3; color:white; }
-.clear { background:#777; color:white; }
-
-#gecmis {
-    margin-top: 10px;
-    max-height: 120px;
-    overflow-y: auto;
-    font-size: 14px;
+#gecmis{
+    margin-top:10px;
+    max-height:100px;
+    overflow:auto;
+    font-size:13px;
     text-align:left;
 }
 </style>
 
 <script>
-function sesCal(){
-    var audio = new Audio("https://www.soundjay.com/button/sounds/button-16.mp3");
-    audio.play();
+let ekran;
+
+window.onload=function(){
+    ekran=document.getElementById("ekran");
 }
 
-function ekle(deger){
-    sesCal();
-    document.getElementById("ekran").value += deger;
+function bip(){
+    let ctx=new (window.AudioContext||window.webkitAudioContext)();
+    let osc=ctx.createOscillator();
+    osc.type="sine";
+    osc.frequency.setValueAtTime(500,ctx.currentTime);
+    osc.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime+0.05);
+}
+
+function ekle(x){
+    bip();
+    ekran.value+=x;
 }
 
 function temizle(){
-    sesCal();
-    document.getElementById("ekran").value = "";
+    bip();
+    ekran.value="";
 }
 
 function hesapla(){
-    sesCal();
-    var ekran = document.getElementById("ekran");
+    bip();
     try{
-        var sonuc = eval(ekran.value);
-        document.getElementById("gecmis").innerHTML += "<div>"+ekran.value+" = "+sonuc+"</div>";
-        ekran.value = sonuc;
-    } catch {
-        alert("Hatalı işlem!");
+        let sonuc=eval(ekran.value);
+        document.getElementById("gecmis").innerHTML+="<div>"+ekran.value+" = "+sonuc+"</div>";
+        ekran.value=sonuc;
+    }catch{
+        alert("Hatalı işlem");
     }
 }
 
-function gecmisTemizle(){
-    document.getElementById("gecmis").innerHTML = "";
+function gecmisSil(){
+    document.getElementById("gecmis").innerHTML="";
 }
 
-function temaDegistir(){
-    document.body.classList.toggle("light-mode");
+function tema(){
+    document.body.classList.toggle("light");
 }
 </script>
 </head>
@@ -135,43 +135,44 @@ function temaDegistir(){
 
 <div class="container">
 
-<div class="top-buttons">
+<div class="top">
 <button onclick="window.location.href='index.html'">🏠 Ana Sayfa</button>
-<button onclick="temaDegistir()">🌙 Tema</button>
+<button onclick="tema()">🌙 Tema</button>
 </div>
 
 <input type="text" id="ekran" readonly>
 
-<div class="buttons">
+<div class="grid">
 <button class="num" onclick="ekle('7')">7</button>
 <button class="num" onclick="ekle('8')">8</button>
 <button class="num" onclick="ekle('9')">9</button>
-<button class="div" onclick="ekle('/')">÷</button>
+<button class="op" onclick="ekle('/')">÷</button>
 
 <button class="num" onclick="ekle('4')">4</button>
 <button class="num" onclick="ekle('5')">5</button>
 <button class="num" onclick="ekle('6')">6</button>
-<button class="mul" onclick="ekle('*')">×</button>
+<button class="op" onclick="ekle('*')">×</button>
 
 <button class="num" onclick="ekle('1')">1</button>
 <button class="num" onclick="ekle('2')">2</button>
 <button class="num" onclick="ekle('3')">3</button>
-<button class="minus" onclick="ekle('-')">−</button>
+<button class="op" onclick="ekle('-')">−</button>
 
 <button class="clear" onclick="temizle()">C</button>
 <button class="num" onclick="ekle('0')">0</button>
 <button class="equal" onclick="hesapla()">=</button>
-<button class="plus" onclick="ekle('+')">+</button>
+<button class="op" onclick="ekle('+')">+</button>
 </div>
 
-<h3>İşlem Geçmişi</h3>
+<h4>İşlem Geçmişi</h4>
 <div id="gecmis"></div>
-<button class="clear" onclick="gecmisTemizle()">🧹 Geçmişi Temizle</button>
+<button class="clear" onclick="gecmisSil()">🧹 Geçmişi Temizle</button>
 
 </div>
 
 </body>
 </html>
+
 
 
 
