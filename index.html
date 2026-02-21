@@ -1,18 +1,79 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Python Projelerim</title>
+<title>Yiğido Python Projeleri</title>
 
 <style>
 body {
-    text-align: center;
-    font-family: Arial;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1e1e2f, #3a3a6a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: white;
+    overflow: hidden;
 }
 
-a {
-    font-size: 22px;
+.container {
+    text-align: center;
+    background: rgba(0,0,0,0.4);
+    padding: 40px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 600px;
+    backdrop-filter: blur(10px);
+}
+
+/* ANİMASYONLAR */
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+}
+
+.slide-up {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: slideUp 1.5s forwards;
+    animation-delay: 0.5s;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.project a {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 20px;
+    text-decoration: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.project a:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.info {
+    margin-top: 30px;
+    font-size: 16px;
+    opacity: 0.8;
 }
 </style>
 
@@ -20,17 +81,24 @@ a {
 
 <body>
 
-<h1>Yiğido Python Projeleri</h1>
+<div class="container">
 
-<h2>
-<a href="hesap-makinesi.html">Hesap Makinesi Projesi</a>
-</h2>
+<h1 class="fade-in">🚀 Yiğido Python Projeleri</h1>
 
-<p>Diğer Projeler Yapım Aşamasındadır.<br>
-Tahmini Süre: 27/02/2026</p>
+<div class="project slide-up">
+<a href="hesap-makinesi.html">🧮 Hesap Makinesi Projesi</a>
+</div>
+
+<div class="info slide-up">
+Diğer projeler yapım aşamasındadır.<br>
+Tahmini Süre: 27/02/2026
+</div>
+
+</div>
 
 </body>
 </html>
+
 
 
 
