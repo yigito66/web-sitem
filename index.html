@@ -14,9 +14,34 @@ body {
     align-items: center;
     min-height: 100vh;
     color: white;
-    overflow: hidden;
 }
 
+/* LOADING EKRANI */
+#loading {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #1e1e2f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #444;
+    border-top: 6px solid #4CAF50;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* ANA SAYFA */
 .container {
     text-align: center;
     background: rgba(0,0,0,0.4);
@@ -25,33 +50,12 @@ body {
     width: 90%;
     max-width: 600px;
     backdrop-filter: blur(10px);
-}
-
-/* ANİMASYONLAR */
-
-.fade-in {
     opacity: 0;
-    animation: fadeIn 1.5s forwards;
+    transition: opacity 1s ease;
 }
 
-.slide-up {
-    opacity: 0;
-    transform: translateY(40px);
-    animation: slideUp 1.5s forwards;
-    animation-delay: 0.5s;
-}
-
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slideUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.container.show {
+    opacity: 1;
 }
 
 .project a {
@@ -77,27 +81,41 @@ body {
 }
 </style>
 
+<script>
+window.onload = function() {
+    setTimeout(function() {
+        document.getElementById("loading").style.display = "none";
+        document.querySelector(".container").classList.add("show");
+    }, 2000);
+}
+</script>
+
 </head>
 
 <body>
 
+<!-- LOADING -->
+<div id="loading">
+    <div class="spinner"></div>
+</div>
+
+<!-- ANA SAYFA -->
 <div class="container">
+    <h1>🚀 Yiğido Python Projeleri</h1>
 
-<h1 class="fade-in">🚀 Yiğido Python Projeleri</h1>
+    <div class="project">
+        <a href="hesap-makinesi.html">🧮 Hesap Makinesi Projesi</a>
+    </div>
 
-<div class="project slide-up">
-<a href="hesap-makinesi.html">🧮 Hesap Makinesi Projesi</a>
-</div>
-
-<div class="info slide-up">
-Diğer projeler yapım aşamasındadır.<br>
-Tahmini Süre: 27/02/2026
-</div>
-
+    <div class="info">
+        Diğer projeler yapım aşamasındadır.<br>
+        Tahmini Süre: 27/02/2026
+    </div>
 </div>
 
 </body>
 </html>
+
 
 
 
