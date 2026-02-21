@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hesap Makinesi</title>
+<title>Yiğido Hesap Makinesi</title>
 
 <style>
 body{
     margin:0;
-    font-family:Arial;
+    font-family:Arial, sans-serif;
     background:#1e1e2f;
     display:flex;
     justify-content:center;
@@ -23,7 +24,7 @@ body{
 
 .container{
     width:95%;
-    max-width:380px;
+    max-width:400px;
     background:#2c2c3e;
     padding:15px;
     border-radius:15px;
@@ -49,7 +50,7 @@ body{
 #ekran{
     width:100%;
     height:55px;
-    font-size:24px;
+    font-size:22px;
     margin-bottom:10px;
     text-align:right;
     padding-right:8px;
@@ -73,10 +74,11 @@ button{
 .op{background:#4CAF50;color:white;}
 .equal{background:#2196F3;color:white;}
 .clear{background:#777;color:white;}
+.percent{background:#9C27B0;color:white;}
 
 #gecmis{
     margin-top:10px;
-    max-height:100px;
+    max-height:120px;
     overflow:auto;
     font-size:13px;
     text-align:left;
@@ -88,16 +90,18 @@ let ekran;
 
 window.onload=function(){
     ekran=document.getElementById("ekran");
+    yukleGecmis();
 }
 
 function bip(){
-    let ctx=new (window.AudioContext||window.webkitAudioContext)();
-    let osc=ctx.createOscillator();
-    osc.type="sine";
-    osc.frequency.setValueAtTime(500,ctx.currentTime);
-    osc.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime+0.05);
+    try{
+        let ctx=new (window.AudioContext||window.webkitAudioContext)();
+        let osc=ctx.createOscillator();
+        osc.frequency.value=500;
+        osc.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime+0.05);
+    }catch{}
 }
 
 function ekle(x){
@@ -114,20 +118,59 @@ function hesapla(){
     bip();
     try{
         let sonuc=eval(ekran.value);
-        document.getElementById("gecmis").innerHTML+="<div>"+ekran.value+" = "+sonuc+"</div>";
+        gecmiseEkle(ekran.value+" = "+sonuc);
         ekran.value=sonuc;
     }catch{
         alert("Hatalı işlem");
     }
 }
 
+function yuzde(){
+    bip();
+    try{
+        ekran.value=eval(ekran.value)/100;
+    }catch{
+        alert("Hatalı işlem");
+    }
+}
+
+function gecmiseEkle(yazi){
+    let div=document.getElementById("gecmis");
+    div.innerHTML+="<div>"+yazi+"</div>";
+    localStorage.setItem("gecmis",div.innerHTML);
+}
+
 function gecmisSil(){
     document.getElementById("gecmis").innerHTML="";
+    localStorage.removeItem("gecmis");
+}
+
+function yukleGecmis(){
+    let kayit=localStorage.getItem("gecmis");
+    if(kayit){
+        document.getElementById("gecmis").innerHTML=kayit;
+    }
 }
 
 function tema(){
     document.body.classList.toggle("light");
 }
+
+/* KLAVYE DESTEĞİ */
+document.addEventListener("keydown",function(e){
+
+    if(!isNaN(e.key)) ekle(e.key);
+
+    if(["+","-","*","/","."].includes(e.key)) ekle(e.key);
+
+    if(e.key==="Enter") hesapla();
+
+    if(e.key==="Backspace")
+        ekran.value=ekran.value.slice(0,-1);
+
+    if(e.key==="Escape") temizle();
+
+});
 </script>
 </head>
 
@@ -162,16 +205,21 @@ function tema(){
 <button class="num" onclick="ekle('0')">0</button>
 <button class="equal" onclick="hesapla()">=</button>
 <button class="op" onclick="ekle('+')">+</button>
+
+<button class="percent" onclick="yuzde()">%</button>
+<button class="num" onclick="ekle('.')">.</button>
+<button class="clear" onclick="gecmisSil()">🧹</button>
+<button class="clear" onclick="temizle()">AC</button>
 </div>
 
 <h4>İşlem Geçmişi</h4>
 <div id="gecmis"></div>
-<button class="clear" onclick="gecmisSil()">🧹 Geçmişi Temizle</button>
 
 </div>
 
 </body>
 </html>
+
 
 
 
