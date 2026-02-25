@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRO Şifre Üretici | Yiğido</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+input[type="number"] {
+    width: 80px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.options {
+    text-align: left;
+    margin-top: 15px;
+}
+
+button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background: #1e3c72;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #16305c;
+}
+
+.password-box {
+    margin-top: 20px;
+    padding: 10px;
+    background: #f1f1f1;
+    border-radius: 8px;
+    word-wrap: break-word;
+    font-weight: bold;
+}
+
+.strength {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.back {
+    margin-top: 15px;
+    display: block;
+    text-decoration: none;
+    color: #1e3c72;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🔐 PRO Şifre Üretici</h1>
+
+    <p>Uzunluk:</p>
+    <input type="number" id="length" min="4" max="32" value="12">
+
+    <div class="options">
+        <label><input type="checkbox" id="uppercase" checked> Büyük Harf</label><br>
+        <label><input type="checkbox" id="lowercase" checked> Küçük Harf</label><br>
+        <label><input type="checkbox" id="numbers" checked> Rakam</label><br>
+        <label><input type="checkbox" id="symbols"> Sembol</label>
+    </div>
+
+    <button onclick="generatePassword()">Şifre Üret</button>
+    <button onclick="copyPassword()">Kopyala</button>
+
+    <div class="password-box" id="result"></div>
+    <div class="strength" id="strength"></div>
+
+    <a href="index.html" class="back">← Ana Sayfaya Dön</a>
+</div>
+
+<script>
+function generatePassword() {
+    const length = document.getElementById("length").value;
+    const useUpper = document.getElementById("uppercase").checked;
+    const useLower = document.getElementById("lowercase").checked;
+    const useNumbers = document.getElementById("numbers").checked;
+    const useSymbols = document.getElementById("symbols").checked;
+
+    let chars = "";
+    if (useUpper) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    if (useLower) chars += "abcdefghijklmnopqrstuvwxyz";
+    if (useNumbers) chars += "0123456789";
+    if (useSymbols) chars += "!@#$%^&*()_+";
+
+    if (chars === "") {
+        alert("En az bir seçenek seçmelisin!");
+        return;
+    }
+
+    let password = "";
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * chars.length);
+        password += chars[randomIndex];
+    }
+
+    document.getElementById("result").innerText = password;
+    checkStrength(password);
+}
+
+function copyPassword() {
+    const text = document.getElementById("result").innerText;
+    if (!text) return;
+    navigator.clipboard.writeText(text);
+    alert("Şifre kopyalandı!");
+}
+
+function checkStrength(password) {
+    let strengthText = "";
+    if (password.length < 8) {
+        strengthText = "Zayıf";
+    } else if (password.length < 12) {
+        strengthText = "Orta";
+    } else {
+        strengthText = "Güçlü";
+    }
+
+    document.getElementById("strength").innerText = "Güç: " + strengthText;
+}
+</script>
+
+</body>
+</html>
