@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> Yiğido PRO Şifre Üretici | Yiğido</title>
+<title>Akıllı Şifre Üretici | Yiğido</title>
 
 <style>
 body {
@@ -21,24 +21,16 @@ body {
     padding: 30px;
     border-radius: 20px;
     width: 90%;
-    max-width: 450px;
+    max-width: 400px;
     text-align: center;
     box-shadow: 0 15px 40px rgba(0,0,0,0.3);
 }
 
-h1 {
-    margin-bottom: 20px;
-}
-
-input[type="number"] {
-    width: 80px;
-    padding: 5px;
+input {
+    width: 80%;
+    padding: 10px;
+    margin-top: 10px;
     font-size: 16px;
-}
-
-.options {
-    text-align: left;
-    margin-top: 15px;
 }
 
 button {
@@ -50,24 +42,17 @@ button {
     background: #1e3c72;
     color: white;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 button:hover {
     background: #16305c;
 }
 
-.password-box {
+.result {
     margin-top: 20px;
     padding: 10px;
     background: #f1f1f1;
     border-radius: 8px;
-    word-wrap: break-word;
-    font-weight: bold;
-}
-
-.strength {
-    margin-top: 10px;
     font-weight: bold;
 }
 
@@ -83,74 +68,37 @@ button:hover {
 <body>
 
 <div class="container">
-    <h1>🔐 Yiğido PRO Şifre Üretici</h1>
+    <h1>🔐 İsimden Şifre Üret</h1>
 
-    <p>Uzunluk:</p>
-    <input type="number" id="length" min="4" max="32" value="12">
+    <input type="text" id="nameInput" placeholder="İsim gir (örnek: Yiğit)">
 
-    <div class="options">
-        <label><input type="checkbox" id="uppercase" checked> Büyük Harf</label><br>
-        <label><input type="checkbox" id="lowercase" checked> Küçük Harf</label><br>
-        <label><input type="checkbox" id="numbers" checked> Rakam</label><br>
-        <label><input type="checkbox" id="symbols"> Sembol</label>
-    </div>
-
+    <br>
     <button onclick="generatePassword()">Şifre Üret</button>
-    <button onclick="copyPassword()">Kopyala</button>
 
-    <div class="password-box" id="result"></div>
-    <div class="strength" id="strength"></div>
+    <div class="result" id="result"></div>
 
     <a href="index.html" class="back">← Ana Sayfaya Dön</a>
 </div>
 
 <script>
 function generatePassword() {
-    const length = document.getElementById("length").value;
-    const useUpper = document.getElementById("uppercase").checked;
-    const useLower = document.getElementById("lowercase").checked;
-    const useNumbers = document.getElementById("numbers").checked;
-    const useSymbols = document.getElementById("symbols").checked;
+    let name = document.getElementById("nameInput").value.trim();
 
-    let chars = "";
-    if (useUpper) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    if (useLower) chars += "abcdefghijklmnopqrstuvwxyz";
-    if (useNumbers) chars += "0123456789";
-    if (useSymbols) chars += "!@#$%^&*()_+";
-
-    if (chars === "") {
-        alert("En az bir seçenek seçmelisin!");
+    if (name === "") {
+        alert("İsim girmen gerekiyor!");
         return;
     }
 
-    let password = "";
-    for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * chars.length);
-        password += chars[randomIndex];
-    }
+    name = name.toLowerCase();
+
+    let randomNumber = Math.floor(100 + Math.random() * 900);
+    let randomNumber2 = Math.floor(100 + Math.random() * 900);
+    let symbols = ["!", "@", "#", ".", "_"];
+    let randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+
+    let password = name + randomNumber + randomSymbol + randomNumber2;
 
     document.getElementById("result").innerText = password;
-    checkStrength(password);
-}
-
-function copyPassword() {
-    const text = document.getElementById("result").innerText;
-    if (!text) return;
-    navigator.clipboard.writeText(text);
-    alert("Şifre kopyalandı!");
-}
-
-function checkStrength(password) {
-    let strengthText = "";
-    if (password.length < 8) {
-        strengthText = "Zayıf";
-    } else if (password.length < 12) {
-        strengthText = "Orta";
-    } else {
-        strengthText = "Güçlü";
-    }
-
-    document.getElementById("strength").innerText = "Güç: " + strengthText;
 }
 </script>
 
