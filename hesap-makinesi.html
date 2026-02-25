@@ -114,6 +114,11 @@ function temizle(){
     ekran.value="";
 }
 
+function silSon(){
+    bip();
+    ekran.value = ekran.value.slice(0,-1);
+}
+
 function hesapla(){
     bip();
     try{
@@ -208,8 +213,8 @@ document.addEventListener("keydown",function(e){
 
 <button class="percent" onclick="yuzde()">%</button>
 <button class="num" onclick="ekle('.')">.</button>
+<button class="clear" onclick="silSon()">←</button>
 <button class="clear" onclick="gecmisSil()">🧹</button>
-<button class="clear" onclick="temizle()">AC</button>
 </div>
 
 <h4>İşlem Geçmişi</h4>
@@ -219,6 +224,7 @@ document.addEventListener("keydown",function(e){
 
 </body>
 </html>
+
 
 
 
