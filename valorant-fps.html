@@ -4,59 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yiğido FPS Sistem</title>
-
-<style>
-body{
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg,#141e30,#243b55);
-    color:white;
-    text-align:center;
-    padding:40px;
-}
-
-.container{
-    max-width:500px;
-    margin:auto;
-    background:rgba(255,255,255,0.05);
-    padding:30px;
-    border-radius:20px;
-    box-shadow:0 0 30px rgba(0,0,0,0.4);
-}
-
-input,select{
-    width:90%;
-    padding:12px;
-    margin:10px 0;
-    border:none;
-    border-radius:10px;
-    font-size:16px;
-}
-
-button{
-    padding:12px 25px;
-    border:none;
-    border-radius:10px;
-    background:#00ff99;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-button:hover{
-    background:#00cc77;
-}
-
-#sonuc{
-    margin-top:20px;
-    font-size:18px;
-    font-weight:bold;
-}
-</style>
 </head>
 
-<body>
+<body style="font-family:Arial; text-align:center; padding:40px; background:#111; color:white;">
 
-<div class="container">
 <h1>🎮 Yiğido FPS Hesaplama</h1>
 
 <select id="oyun">
@@ -65,15 +16,15 @@ button:hover{
 <option value="fortnite">Fortnite</option>
 <option value="gta5">GTA 5</option>
 </select>
+<br><br>
 
-<input type="text" id="cpu" placeholder="İşlemci (örn: i5-10400, Ryzen 5 5600)">
-<input type="text" id="gpu" placeholder="Ekran Kartı (örn: GTX 1650, RTX 3060)">
-<input type="number" id="ram" placeholder="RAM (GB)">
+<input type="text" id="cpu" placeholder="İşlemci"><br><br>
+<input type="text" id="gpu" placeholder="Ekran Kartı"><br><br>
+<input type="number" id="ram" placeholder="RAM (GB)"><br><br>
 
 <button onclick="hesapla()">FPS Hesapla</button>
 
-<div id="sonuc"></div>
-</div>
+<h2 id="sonuc"></h2>
 
 <script>
 function hesapla(){
@@ -82,55 +33,48 @@ let oyun=document.getElementById("oyun").value;
 let cpu=document.getElementById("cpu").value.toLowerCase();
 let gpu=document.getElementById("gpu").value.toLowerCase();
 let ram=parseInt(document.getElementById("ram").value);
-let sonuc=document.getElementById("sonuc");
 
 let puan=0;
 
-// CPU PUAN
 let cpuModel=cpu.match(/\d{4,5}/);
 if(cpuModel){
-    let model=parseInt(cpuModel[0]);
-    if(model>=13000) puan+=5;
-    else if(model>=10000) puan+=4;
-    else if(model>=8000) puan+=3;
-    else if(model>=6000) puan+=2;
-    else puan+=1;
+let model=parseInt(cpuModel[0]);
+if(model>=13000) puan+=5;
+else if(model>=10000) puan+=4;
+else if(model>=8000) puan+=3;
+else if(model>=6000) puan+=2;
+else puan+=1;
 }
 
-// GPU PUAN
 if(gpu.includes("4090")||gpu.includes("4080")) puan+=5;
-else if(gpu.includes("3070")||gpu.includes("3060")||gpu.includes("rx 6700")) puan+=4;
-else if(gpu.includes("1660")||gpu.includes("1650")||gpu.includes("rx 580")) puan+=3;
-else if(gpu.includes("1050")||gpu.includes("rx 560")) puan+=2;
+else if(gpu.includes("3070")||gpu.includes("3060")) puan+=4;
+else if(gpu.includes("1660")||gpu.includes("1650")) puan+=3;
 else puan+=1;
 
-// RAM PUAN
-if(ram>=32) puan+=4;
-else if(ram>=16) puan+=3;
+if(ram>=16) puan+=3;
 else if(ram>=8) puan+=2;
 else puan+=1;
 
-// OYUN ZORLUK ÇARPANI
 let zorluk=1;
-
-if(oyun=="valorant") zorluk=1;
 if(oyun=="cs2") zorluk=1.2;
 if(oyun=="fortnite") zorluk=1.5;
 if(oyun=="gta5") zorluk=1.7;
 
 let fps=Math.floor((puan*30)/zorluk);
 
+let sonuc=document.getElementById("sonuc");
+
 if(fps>=180){
-    sonuc.innerHTML="🟩 Tahmini FPS: "+fps+"+ (Ultra Ayar)";
+sonuc.innerHTML="🟩 "+fps+"+ FPS (Ultra)";
 }
 else if(fps>=120){
-    sonuc.innerHTML="🟩 Tahmini FPS: "+fps+" (Yüksek Ayar)";
+sonuc.innerHTML="🟩 "+fps+" FPS (Yüksek)";
 }
 else if(fps>=60){
-    sonuc.innerHTML="🟨 Tahmini FPS: "+fps+" (Orta Ayar)";
+sonuc.innerHTML="🟨 "+fps+" FPS (Orta)";
 }
 else{
-    sonuc.innerHTML="🟥 Tahmini FPS: "+fps+" (Düşük / Kaldırmayabilir)";
+sonuc.innerHTML="🟥 "+fps+" FPS (Düşük)";
 }
 
 }
