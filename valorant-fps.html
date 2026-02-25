@@ -1,85 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Yiğido FPS</title>
+</head>
+
+<body style="background:black;color:white;text-align:center;font-family:Arial;padding:40px;">
+
+<h1>FPS Test</h1>
+
+<input id="cpu" placeholder="İşlemci"><br><br>
+<input id="gpu" placeholder="Ekran Kartı"><br><br>
+<input id="ram" placeholder="RAM"><br><br>
+
+<button onclick="hesapla()">Hesapla</button>
+
+<h2 id="sonuc"></h2>
+
 <script>
 function hesapla(){
 
-let cpu=document.getElementById("cpu").value.toLowerCase();
-let gpu=document.getElementById("gpu").value.toLowerCase();
-let ram=parseInt(document.getElementById("ram").value);
+var cpu=document.getElementById("cpu").value.toLowerCase();
+var gpu=document.getElementById("gpu").value.toLowerCase();
+var ram=parseInt(document.getElementById("ram").value);
 
-let cpuScore=0;
-let gpuScore=0;
-let ramScore=0;
+var puan=0;
 
-/* ================= CPU ANALİZ ================= */
+if(cpu.includes("14")) puan+=5;
+else if(cpu.includes("13")) puan+=4;
+else if(cpu.includes("10")) puan+=3;
+else puan+=2;
 
-let cpuModel=cpu.match(/\d{4,5}/);
+if(gpu.includes("3060")) puan+=5;
+else if(gpu.includes("1650")) puan+=3;
+else puan+=2;
 
-if(cpu.includes("intel")){
-    if(cpuModel){
-        let model=parseInt(cpuModel[0]);
-        let nesil=parseInt(model.toString().substring(0,2));
+if(ram>=16) puan+=3;
+else if(ram>=8) puan+=2;
+else puan+=1;
 
-        cpuScore = nesil; // Nesil kadar puan
-    }
-}
+var fps=puan*20;
 
-else if(cpu.includes("ryzen")){
-    if(cpuModel){
-        let model=parseInt(cpuModel[0]);
-        let seri=parseInt(model.toString().substring(0,1));
-
-        cpuScore = seri * 3;
-    }
-}
-
-/* ================= GPU ANALİZ ================= */
-
-if(gpu.includes("rtx")){
-    let seri=gpu.match(/\d{3,4}/);
-    if(seri){
-        gpuScore=parseInt(seri[0])/100;
-    }
-}
-
-else if(gpu.includes("gtx")){
-    let seri=gpu.match(/\d{3,4}/);
-    if(seri){
-        gpuScore=parseInt(seri[0])/120;
-    }
-}
-
-else if(gpu.includes("rx")){
-    let seri=gpu.match(/\d{3,4}/);
-    if(seri){
-        gpuScore=parseInt(seri[0])/110;
-    }
-}
-
-/* ================= RAM ================= */
-
-if(ram>=32) ramScore=10;
-else if(ram>=16) ramScore=7;
-else if(ram>=8) ramScore=4;
-else ramScore=2;
-
-/* ================= GENEL HESAP ================= */
-
-let toplam=(cpuScore + gpuScore + ramScore);
-let fps=Math.floor(toplam*6);
-
-let sonuc=document.getElementById("sonuc");
-
-if(fps>=200){
-    sonuc.innerHTML="🟢 "+fps+"+ FPS (Ultra)";
-}
-else if(fps>=144){
-    sonuc.innerHTML="🟢 "+fps+" FPS (Yüksek)";
-}
-else if(fps>=60){
-    sonuc.innerHTML="🟡 "+fps+" FPS (Orta)";
-}
-else{
-    sonuc.innerHTML="🔴 "+fps+" FPS (Düşük)";
-}
-
+document.getElementById("sonuc").innerHTML="Tahmini FPS: "+fps;
 }
 </script>
+
+</body>
+</html>
