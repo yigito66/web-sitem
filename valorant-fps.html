@@ -1,88 +1,68 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valorant FPS Tahmini | Yiğido</title>
-
-<style>
-body{
-    background:#1e1e2f;
-    color:white;
-    font-family:Arial, sans-serif;
-    text-align:center;
-    padding:40px;
-}
-
-.container{
-    max-width:500px;
-    margin:auto;
-    background:#2c2c3e;
-    padding:25px;
-    border-radius:15px;
-}
-
-input, button{
-    padding:10px;
-    font-size:16px;
-    margin:10px;
-    width:80%;
-    border:none;
-    border-radius:8px;
-}
-
-button{
-    background:#4CAF50;
-    color:white;
-    cursor:pointer;
-}
-
-button:hover{
-    opacity:0.9;
-}
-
-#sonuc{
-    margin-top:20px;
-    font-size:20px;
-}
-</style>
-</head>
-<body>
-
-<div class="container">
-
-<h1>🎮 Valorant FPS Tahmini</h1>
-<p>İşlemci modelini yaz (örnek: i3-4100)</p>
-
-<input type="text" id="cpu" placeholder="İşlemci modeli">
-<br>
-<button onclick="kontrol()">FPS Hesapla</button>
-
-<h2 id="sonuc"></h2>
-
-</div>
-
 <script>
 function kontrol(){
 
 let cpu=document.getElementById("cpu").value.toLowerCase();
 let sonuc=document.getElementById("sonuc");
 
-if(cpu.includes("i3-4") || cpu.includes("i3 4")){
-    sonuc.innerHTML="🟨 Yaklaşık 60 FPS (Orta Ayar)";
+// INTEL İŞLEMCİLER
+if(cpu.includes("intel") || cpu.includes("i")){
+
+    // Model numarasını bul (örn 14100)
+    let sayi = cpu.match(/\d{4,5}/);
+
+    if(sayi){
+        let model = parseInt(sayi[0]);
+
+        if(model >= 13000){
+            sonuc.innerHTML="🟩 200+ FPS (Yüksek Ayar)";
+        }
+        else if(model >= 10000){
+            sonuc.innerHTML="🟩 160+ FPS (Yüksek Ayar)";
+        }
+        else if(model >= 8000){
+            sonuc.innerHTML="🟨 120 FPS (Orta-Yüksek Ayar)";
+        }
+        else if(model >= 6000){
+            sonuc.innerHTML="🟨 90 FPS (Orta Ayar)";
+        }
+        else{
+            sonuc.innerHTML="🟥 60 FPS altı (Düşük Ayar)";
+        }
+    }
+    else{
+        sonuc.innerHTML="❓ Model algılanamadı.";
+    }
 }
-else if(cpu.includes("i5") || cpu.includes("ryzen 5")){
-    sonuc.innerHTML="🟩 144 FPS ve üzeri (Yüksek Ayar)";
+
+// AMD RYZEN
+else if(cpu.includes("ryzen")){
+
+    let sayi = cpu.match(/\d{4}/);
+
+    if(sayi){
+        let model = parseInt(sayi[0]);
+
+        if(model >= 7000){
+            sonuc.innerHTML="🟩 220+ FPS (Ultra)";
+        }
+        else if(model >= 5000){
+            sonuc.innerHTML="🟩 180+ FPS (Yüksek)";
+        }
+        else if(model >= 3000){
+            sonuc.innerHTML="🟨 120 FPS (Orta)";
+        }
+        else{
+            sonuc.innerHTML="🟥 60 FPS altı";
+        }
+    }
+    else{
+        sonuc.innerHTML="❓ Ryzen modeli algılanamadı.";
+    }
 }
-else if(cpu.includes("i3") || cpu.includes("core 2")){
-    sonuc.innerHTML="🟥 30 FPS (Düşük Ayar)";
-}
+
 else{
-    sonuc.innerHTML="❓ İşlemci tanınmadı veya düşük performans.";
+    sonuc.innerHTML="❓ İşlemci tanınmadı.";
 }
 
 }
 </script>
-
-</body>
-</html>
