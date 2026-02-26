@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tahmini Boy Hesaplama | Yiğido</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+    text-align: center;
+}
+
+.container {
+    background: white;
+    color: black;
+    padding: 40px;
+    border-radius: 20px;
+    width: 300px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+input {
+    padding: 8px;
+    margin: 5px;
+    width: 90%;
+}
+
+button {
+    padding: 8px 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #667eea;
+    color: white;
+    cursor: pointer;
+}
+
+a {
+    display: block;
+    margin-top: 15px;
+    text-decoration: none;
+    color: #667eea;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>📏 Tahmini Boy Hesaplama</h2>
+
+    <input type="number" id="anneBoy" placeholder="Anne boyu (cm)">
+    <input type="number" id="babaBoy" placeholder="Baba boyu (cm)">
+
+    <div>
+        <label>
+            <input type="radio" name="cinsiyet" value="erkek"> Erkek
+        </label>
+        <label>
+            <input type="radio" name="cinsiyet" value="kiz"> Kız
+        </label>
+    </div>
+
+    <button onclick="boyHesapla()">Hesapla</button>
+
+    <p id="sonuc" style="font-weight:bold;"></p>
+
+    <a href="index.html">← Ana Sayfaya Dön</a>
+</div>
+
+<script>
+function boyHesapla() {
+    let anne = parseFloat(document.getElementById("anneBoy").value);
+    let baba = parseFloat(document.getElementById("babaBoy").value);
+    let cinsiyet = document.querySelector('input[name="cinsiyet"]:checked');
+
+    if (!anne || !baba) {
+        document.getElementById("sonuc").innerText = "Lütfen anne ve baba boyunu girin.";
+        return;
+    }
+
+    if (!cinsiyet) {
+        document.getElementById("sonuc").innerText = "Lütfen cinsiyet seçin.";
+        return;
+    }
+
+    let tahmini;
+
+    if (cinsiyet.value === "erkek") {
+        tahmini = (anne + baba + 13) / 2;
+    } else {
+        tahmini = (anne + baba - 13) / 2;
+    }
+
+    document.getElementById("sonuc").innerText =
+        "Tahmini boyunuz: " + tahmini.toFixed(1) + " cm";
+}
+</script>
+
+</body>
+</html>
