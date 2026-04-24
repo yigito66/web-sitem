@@ -7,8 +7,9 @@
 
 <style>
 body{
-    font-family: Arial;
-    background: linear-gradient(135deg,#1e3c72,#2a5298);
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(135deg,#1e3c72,#2a5298);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -33,7 +34,6 @@ button{
     color:white;
     cursor:pointer;
 }
-button:hover{background:#16305c;}
 </style>
 </head>
 
@@ -42,21 +42,19 @@ button:hover{background:#16305c;}
 <div class="container">
     <h2>🔊 Soundboard</h2>
 
-    <button onclick="play('https://www.myinstants.com/media/sounds/afia-oil-zil-sesi-85736.mp3')">Ses 1</button>
-    <button onclick="play('https://www.myinstants.com/media/sounds/dc-sovusss-84956.mp3')">Ses 2</button>
-    <button onclick="play('https://www.myinstants.com/media/sounds/korna-tir-28678.mp3')">Ses 3</button>
-    <button onclick="play('https://www.myinstants.com/media/sounds/zenciler-keremi-made-by-3mr3-8759.mp3')">Ses 4</button>
-    <button onclick="play('https://www.myinstants.com/media/sounds/kastamonu-taskopru-sarimsak-geldi-71831.mp3')">Ses 5</button>
+    <button onclick="play('https://www.myinstants.com/instant/afia-oil-zil-sesi-85736/embed/')">Ses 1</button>
+    <button onclick="play('https://www.myinstants.com/instant/dc-sovusss-84956/embed/')">Ses 2</button>
+    <button onclick="play('https://www.myinstants.com/instant/korna-tir-28678/embed/')">Ses 3</button>
+    <button onclick="play('https://www.myinstants.com/instant/zenciler-keremi-made-by-3mr3-8759/embed/')">Ses 4</button>
+    <button onclick="play('https://www.myinstants.com/instant/kastamonu-taskopru-sarimsak-geldi-71831/embed/')">Ses 5</button>
 
-    <audio id="audio"></audio>
+    <div id="box"></div>
 </div>
 
 <script>
-function play(src){
-    let audio = document.getElementById("audio");
-    audio.src = src;
-    audio.currentTime = 0;
-    audio.play();
+function play(url){
+    document.getElementById("box").innerHTML =
+        `<iframe src="${url}" width="1" height="1"></iframe>`;
 }
 </script>
 
