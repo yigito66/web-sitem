@@ -34,27 +34,39 @@ button{
     color:white;
     cursor:pointer;
 }
+button:hover{background:#16305c;}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-    <h2>🔊 Soundboard</h2>
+    <h2>🔊 Soundboard (ÇALIŞIR)</h2>
 
-    <button onclick="play('https://www.myinstants.com/instant/afia-oil-zil-sesi-85736/embed/')">Alfa oil</button>
-    <button onclick="play('https://www.myinstants.com/instant/dc-sovusss-84956/embed/')">dc sövüş</button>
-    <button onclick="play('https://www.myinstants.com/instant/korna-tir-28678/embed/')">tır kornası</button>
-    <button onclick="play('https://www.myinstants.com/instant/zenciler-keremi-made-by-3mr3-8759/embed/')">zenciler keremi....</button>
-    <button onclick="play('https://www.myinstants.com/instant/kastamonu-taskopru-sarimsak-geldi-71831/embed/')">sarımsakcı</button>
+    <button onclick="play('s1')">Ses 1</button>
+    <button onclick="play('s2')">Ses 2</button>
+    <button onclick="play('s3')">Ses 3</button>
+    <button onclick="play('s4')">Ses 4</button>
+    <button onclick="play('s5')">Ses 5</button>
 
-    <div id="box"></div>
+    <audio id="s1" src="https://www.myinstants.com/media/sounds/afia-oil-zil-sesi-85736.mp3"></audio>
+    <audio id="s2" src="https://www.myinstants.com/media/sounds/dc-sovusss-84956.mp3"></audio>
+    <audio id="s3" src="https://www.myinstants.com/media/sounds/korna-tir-28678.mp3"></audio>
+    <audio id="s4" src="https://www.myinstants.com/media/sounds/zenciler-keremi-made-by-3mr3-8759.mp3"></audio>
+    <audio id="s5" src="https://www.myinstants.com/media/sounds/kastamonu-taskopru-sarimsak-geldi-71831.mp3"></audio>
+
 </div>
 
 <script>
-function play(url){
-    document.getElementById("box").innerHTML =
-        `<iframe src="${url}" width="1" height="1"></iframe>`;
+function play(id){
+    let audio = document.getElementById(id);
+
+    audio.pause();
+    audio.currentTime = 0;
+
+    audio.play().catch(err=>{
+        alert("Ses engellendi. İlk tıklamayı sayfa içinde yap.");
+    });
 }
 </script>
 
