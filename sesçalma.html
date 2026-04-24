@@ -34,6 +34,7 @@ button{
     color:white;
     cursor:pointer;
 }
+
 button:hover{background:#16305c;}
 </style>
 </head>
@@ -41,7 +42,11 @@ button:hover{background:#16305c;}
 <body>
 
 <div class="container">
-    <h2>🔊 Soundboard (ÇALIŞIR)</h2>
+    <h2>🔊 Soundboard</h2>
+
+    <p>👉 Önce “Başlat”a bas</p>
+
+    <button onclick="unlock()">▶ Başlat</button>
 
     <button onclick="play('s1')">Ses 1</button>
     <button onclick="play('s2')">Ses 2</button>
@@ -54,20 +59,39 @@ button:hover{background:#16305c;}
     <audio id="s3" src="https://www.myinstants.com/media/sounds/korna-tir-28678.mp3"></audio>
     <audio id="s4" src="https://www.myinstants.com/media/sounds/zenciler-keremi-made-by-3mr3-8759.mp3"></audio>
     <audio id="s5" src="https://www.myinstants.com/media/sounds/kastamonu-taskopru-sarimsak-geldi-71831.mp3"></audio>
-
 </div>
 
 <script>
-function play(id){
-    let audio = document.getElementById(id);
 
-    audio.pause();
-    audio.currentTime = 0;
+let unlocked = false;
 
-    audio.play().catch(err=>{
-        alert("Ses engellendi. İlk tıklamayı sayfa içinde yap.");
+function unlock(){
+    // 🔓 tarayıcı ses kilidini açar
+    let temp = new Audio("https://www.myinstants.com/media/sounds/afia-oil-zil-sesi-85736.mp3");
+    temp.volume = 0;
+    temp.play().then(()=>{
+        unlocked = true;
+        alert("🔊 Ses açıldı!");
+    }).catch(()=>{
+        alert("Tarayıcı ses engelledi, tekrar dene.");
     });
 }
+
+function play(id){
+
+    if(!unlocked){
+        alert("Önce Başlat'a bas!");
+        return;
+    }
+
+    let audio = document.getElementById(id);
+
+    audio.currentTime = 0;
+    audio.play().catch(()=>{
+        alert("Ses oynatılamadı.");
+    });
+}
+
 </script>
 
 </body>
