@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Soundboard FIX</title>
+<title>Soundboard (Engelsiz)</title>
 
 <style>
 body{
@@ -20,7 +20,7 @@ body{
     background:white;
     padding:25px;
     border-radius:20px;
-    width:320px;
+    width:300px;
     text-align:center;
 }
 
@@ -34,7 +34,6 @@ button{
     color:white;
     cursor:pointer;
 }
-button:hover{background:#16305c;}
 </style>
 </head>
 
@@ -43,51 +42,34 @@ button:hover{background:#16305c;}
 <div class="container">
     <h2>🔊 Soundboard</h2>
 
-    <p>👉 İlk olarak “Sesleri Aktifleştir”e bas</p>
-
-    <button onclick="unlock()">🔓 Sesleri Aktifleştir</button>
-
-    <button onclick="play('s1')">Ses 1</button>
-    <button onclick="play('s2')">Ses 2</button>
-    <button onclick="play('s3')">Ses 3</button>
-    <button onclick="play('s4')">Ses 4</button>
-    <button onclick="play('s5')">Ses 5</button>
-
+    <button onclick="beep(200)">Ses 1</button>
+    <button onclick="beep(400)">Ses 2</button>
+    <button onclick="beep(600)">Ses 3</button>
+    <button onclick="beep(800)">Ses 4</button>
+    <button onclick="beep(1000)">Ses 5</button>
 </div>
-
-<!-- 🎵 GERÇEK ÇALIŞAN SESLER -->
-<audio id="s1" src="https://www.soundjay.com/buttons/sounds/button-09.mp3"></audio>
-<audio id="s2" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
-<audio id="s3" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
-<audio id="s4" src="https://www.soundjay.com/buttons/sounds/button-21.mp3"></audio>
-<audio id="s5" src="https://www.soundjay.com/buttons/sounds/button-22.mp3"></audio>
 
 <script>
 
-let unlocked = false;
+// 🔊 tamamen browser içi ses üretir
+function beep(freq){
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
 
-function unlock(){
-    // 🔓 tarayıcı kilidini açar
-    let audio = new Audio("https://www.soundjay.com/buttons/sounds/button-09.mp3");
-    audio.volume = 0;
-    audio.play().then(()=>{
-        unlocked = true;
-        alert("🔊 Sesler açıldı!");
-    }).catch(()=>{
-        alert("Tarayıcı ses izni vermedi. Sayfaya tekrar tıkla.");
-    });
-}
+    oscillator.type = "square";
+    oscillator.frequency.value = freq;
 
-function play(id){
+    gain.gain.value = 0.1;
 
-    if(!unlocked){
-        alert("Önce sesleri aktifleştir!");
-        return;
-    }
+    oscillator.connect(gain);
+    gain.connect(audioCtx.destination);
 
-    let audio = document.getElementById(id);
-    audio.currentTime = 0;
-    audio.play();
+    oscillator.start();
+
+    setTimeout(()=>{
+        oscillator.stop();
+    },200);
 }
 
 </script>
