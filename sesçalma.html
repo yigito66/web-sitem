@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soundboard Game | Yiğido</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* 📱 mobil */
+@media (max-width: 500px) {
+    .container {
+        width: 90%;
+    }
+}
+
+.container {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+button {
+    width: 100%;
+    margin: 8px 0;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #1e3c72;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+    background: #16305c;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mute {
+    background: #555;
+    font-size: 12px;
+    padding: 8px;
+}
+
+.game {
+    margin-top: 10px;
+    background: #ffcc00;
+    color: black;
+}
+
+.score {
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+#player {
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top">
+        <h3>🔊 Soundboard</h3>
+        <button class="mute" onclick="toggleMute()">🔇 Mute</button>
+    </div>
+
+    <div class="score">🏆 Puan: <span id="score">0</span></div>
+
+    <button onclick="playSound('https://www.myinstants.com/instant/afia-oil-zil-sesi-85736/embed/', 1)">Ses 1</button>
+    <button onclick="playSound('https://www.myinstants.com/instant/dc-sovusss-84956/embed/', 2)">Ses 2</button>
+    <button onclick="playSound('https://www.myinstants.com/instant/korna-tir-28678/embed/', 3)">Ses 3</button>
+    <button onclick="playSound('https://www.myinstants.com/instant/zenciler-keremi-made-by-3mr3-8759/embed/', 4)">Ses 4</button>
+    <button onclick="playSound('https://www.myinstants.com/instant/kastamonu-taskopru-sarimsak-geldi-71831/embed/', 5)">Ses 5</button>
+
+    <button class="game" onclick="startGame()">🎮 Game Mode Başlat</button>
+
+    <div id="player"></div>
+
+</div>
+
+<script>
+
+let score = 0;
+let mute = false;
+let gameMode = false;
+let timeLeft = 15;
+
+function playSound(url, id){
+
+    if(mute) return;
+
+    document.getElementById("player").innerHTML =
+        `<iframe width="1" height="1" src="${url}" frameborder="0"></iframe>`;
+
+    if(gameMode){
+        score += 10;
+        document.getElementById("score").innerText = score;
+    }
+}
+
+function toggleMute(){
+    mute = !mute;
+    alert(mute ? "🔇 Sessiz mod açıldı" : "🔊 Ses açıldı");
+}
+
+function startGame(){
+    gameMode = true;
+    score = 0;
+    document.getElementById("score").innerText = score;
+
+    alert("🎮 Game başladı! 15 saniye içinde tıkla!");
+
+    let timer = setInterval(()=>{
+        timeLeft--;
+
+        if(timeLeft <= 0){
+            clearInterval(timer);
+            gameMode = false;
+            alert("⏰ Oyun bitti! Puan: " + score);
+            timeLeft = 15;
+        }
+
+    },1000);
+}
+
+</script>
+
+</body>
+</html>
