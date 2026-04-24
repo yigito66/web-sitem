@@ -34,7 +34,6 @@ button{
     color:white;
     cursor:pointer;
 }
-
 button:hover{background:#16305c;}
 </style>
 </head>
@@ -44,9 +43,9 @@ button:hover{background:#16305c;}
 <div class="container">
     <h2>🔊 Soundboard</h2>
 
-    <p>👉 Önce “Başlat”a bas</p>
+    <p>👉 İlk olarak “Sesleri Aktifleştir”e bas</p>
 
-    <button onclick="unlock()">▶ Başlat</button>
+    <button onclick="unlock()">🔓 Sesleri Aktifleştir</button>
 
     <button onclick="play('s1')">Ses 1</button>
     <button onclick="play('s2')">Ses 2</button>
@@ -54,42 +53,41 @@ button:hover{background:#16305c;}
     <button onclick="play('s4')">Ses 4</button>
     <button onclick="play('s5')">Ses 5</button>
 
-    <audio id="s1" src="https://www.myinstants.com/media/sounds/afia-oil-zil-sesi-85736.mp3"></audio>
-    <audio id="s2" src="https://www.myinstants.com/media/sounds/dc-sovusss-84956.mp3"></audio>
-    <audio id="s3" src="https://www.myinstants.com/media/sounds/korna-tir-28678.mp3"></audio>
-    <audio id="s4" src="https://www.myinstants.com/media/sounds/zenciler-keremi-made-by-3mr3-8759.mp3"></audio>
-    <audio id="s5" src="https://www.myinstants.com/media/sounds/kastamonu-taskopru-sarimsak-geldi-71831.mp3"></audio>
 </div>
+
+<!-- 🎵 GERÇEK ÇALIŞAN SESLER -->
+<audio id="s1" src="https://www.soundjay.com/buttons/sounds/button-09.mp3"></audio>
+<audio id="s2" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
+<audio id="s3" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
+<audio id="s4" src="https://www.soundjay.com/buttons/sounds/button-21.mp3"></audio>
+<audio id="s5" src="https://www.soundjay.com/buttons/sounds/button-22.mp3"></audio>
 
 <script>
 
 let unlocked = false;
 
 function unlock(){
-    // 🔓 tarayıcı ses kilidini açar
-    let temp = new Audio("https://www.myinstants.com/media/sounds/afia-oil-zil-sesi-85736.mp3");
-    temp.volume = 0;
-    temp.play().then(()=>{
+    // 🔓 tarayıcı kilidini açar
+    let audio = new Audio("https://www.soundjay.com/buttons/sounds/button-09.mp3");
+    audio.volume = 0;
+    audio.play().then(()=>{
         unlocked = true;
-        alert("🔊 Ses açıldı!");
+        alert("🔊 Sesler açıldı!");
     }).catch(()=>{
-        alert("Tarayıcı ses engelledi, tekrar dene.");
+        alert("Tarayıcı ses izni vermedi. Sayfaya tekrar tıkla.");
     });
 }
 
 function play(id){
 
     if(!unlocked){
-        alert("Önce Başlat'a bas!");
+        alert("Önce sesleri aktifleştir!");
         return;
     }
 
     let audio = document.getElementById(id);
-
     audio.currentTime = 0;
-    audio.play().catch(()=>{
-        alert("Ses oynatılamadı.");
-    });
+    audio.play();
 }
 
 </script>
