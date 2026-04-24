@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gelişmiş Kronometre | Yiğido</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* 📱 mobil uyum */
+@media (max-width: 500px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+    .time {
+        font-size: 32px;
+    }
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.time {
+    font-size: 45px;
+    font-weight: bold;
+    margin: 20px 0;
+    transition: transform 0.2s ease;
+}
+
+/* 🟢 animasyon */
+.time.active {
+    transform: scale(1.05);
+    color: #1e3c72;
+}
+
+button {
+    margin: 5px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background: #1e3c72;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #16305c;
+    transform: scale(1.05);
+}
+
+.back {
+    margin-top: 15px;
+    display: block;
+    text-decoration: none;
+    color: #1e3c72;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>⏱️ Kronometre</h1>
+
+    <div class="time" id="time">00:00:00</div>
+
+    <button onclick="start()">Başlat 🟢</button>
+    <button onclick="stop()">Durdur 🔴</button>
+    <button onclick="reset()">Sıfırla ♻️</button>
+
+    <a href="index.html" class="back">← Ana Sayfa</a>
+</div>
+
+<!-- 🔊 sesler -->
+<audio id="startSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+<audio id="stopSound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
+
+<script>
+let seconds = parseInt(localStorage.getItem("chronoTime")) || 0;
+let interval = null;
+
+function formatTime(sec){
+    let h = Math.floor(sec / 3600);
+    let m = Math.floor((sec % 3600) / 60);
+    let s = sec % 60;
+    return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+function updateDisplay(){
+    document.getElementById("time").innerText = formatTime(seconds);
+}
+
+updateDisplay();
+
+function start(){
+    if(interval) return;
+
+    document.getElementById("startSound").play();
+
+    document.getElementById("time").classList.add("active");
+
+    interval = setInterval(()=>{
+        seconds++;
+        updateDisplay();
+
+        // 💾 kaydet
+        localStorage.setItem("chronoTime", seconds);
+    },1000);
+}
+
+function stop(){
+    clearInterval(interval);
+    interval = null;
+
+    document.getElementById("stopSound").play();
+
+    document.getElementById("time").classList.remove("active");
+}
+
+function reset(){
+    stop();
+    seconds = 0;
+    localStorage.removeItem("chronoTime");
+    updateDisplay();
+}
+</script>
+
+</body>
+</html>
